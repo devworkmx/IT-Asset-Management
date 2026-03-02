@@ -1,0 +1,258 @@
+import { Asset } from "../types";
+
+export const mockAssets: Asset[] = [
+  {
+    id: "1",
+    nombre: "PC Capitán",
+    tipo: "PC",
+    ip: "192.168.1.10",
+    mac: "00:1B:44:11:3A:B7",
+    nivel: "Puente",
+    ubicacion: "Cabina del Capitán",
+    estado: "Activo",
+    marca: "Dell",
+    modelo: "OptiPlex 7090",
+    numeroSerie: "SN789012345",
+    fechaAdquisicion: "2024-01-15",
+    garantiaHasta: "2027-01-15",
+    ultimoMantenimiento: "2025-12-01",
+    notas: "Equipo principal de navegación",
+    historialMantenimiento: [
+      {
+        id: "m1",
+        fecha: "2025-12-01",
+        tipo: "Preventivo",
+        problema: "Mantenimiento programado trimestral",
+        solucion: "Limpieza de hardware, actualización de Windows, optimización del sistema",
+        tecnico: "Carlos Mendoza"
+      },
+      {
+        id: "m2",
+        fecha: "2025-09-15",
+        tipo: "Preventivo",
+        problema: "Revisión rutinaria",
+        solucion: "Verificación de componentes, actualización de drivers",
+        tecnico: "Ana García"
+      }
+    ]
+  },
+  {
+    id: "2",
+    nombre: "Switch Principal Puente",
+    tipo: "Switch",
+    ip: "192.168.1.1",
+    mac: "00:1A:2B:3C:4D:5E",
+    nivel: "Puente",
+    ubicacion: "Sala de Comunicaciones",
+    estado: "Activo",
+    marca: "Cisco",
+    modelo: "Catalyst 2960",
+    numeroSerie: "FCW2145G0T1",
+    fechaAdquisicion: "2023-06-10",
+    garantiaHasta: "2028-06-10",
+    ultimoMantenimiento: "2025-11-15",
+    notas: "Switch principal de 24 puertos",
+    historialMantenimiento: [
+      {
+        id: "m3",
+        fecha: "2025-11-15",
+        tipo: "Preventivo",
+        problema: "Actualización de firmware",
+        solucion: "Firmware actualizado a versión 15.2.7, respaldo de configuración realizado",
+        tecnico: "Roberto Silva"
+      }
+    ]
+  },
+  {
+    id: "3",
+    nombre: "Impresora Administración",
+    tipo: "Impresora",
+    ip: "192.168.1.50",
+    mac: "00:25:B3:FE:8A:2C",
+    nivel: "Cubierta A",
+    ubicacion: "Oficina Administrativa",
+    estado: "Activo",
+    marca: "HP",
+    modelo: "LaserJet Pro M404dn",
+    numeroSerie: "VNB8N12345",
+    fechaAdquisicion: "2024-03-20",
+    garantiaHasta: "2026-03-20",
+    ultimoMantenimiento: "2026-01-10",
+    notas: "Impresora láser monocromática",
+    historialMantenimiento: [
+      {
+        id: "m4",
+        fecha: "2026-01-10",
+        tipo: "Correctivo",
+        problema: "Atasco de papel frecuente",
+        solucion: "Limpieza de rodillos, reemplazo de kit de mantenimiento",
+        tecnico: "María López"
+      }
+    ]
+  },
+  {
+    id: "4",
+    nombre: "PC Sala de Máquinas",
+    tipo: "PC",
+    ip: "192.168.2.10",
+    mac: "00:1B:44:22:5C:D8",
+    nivel: "Sala de Máquinas",
+    ubicacion: "Control Principal",
+    estado: "Activo",
+    marca: "Lenovo",
+    modelo: "ThinkCentre M720",
+    numeroSerie: "PC123ABC",
+    fechaAdquisicion: "2023-11-05",
+    garantiaHasta: "2026-11-05",
+    ultimoMantenimiento: "2025-10-20",
+    notas: "Monitoreo de sistemas mecánicos"
+  },
+  {
+    id: "5",
+    nombre: "Switch Cubierta B",
+    tipo: "Switch",
+    ip: "192.168.3.1",
+    mac: "00:1A:2B:3C:5E:7F",
+    nivel: "Cubierta B",
+    ubicacion: "Pasillo Central",
+    estado: "Activo",
+    marca: "Netgear",
+    modelo: "GS308",
+    numeroSerie: "NG45678901",
+    fechaAdquisicion: "2024-02-12",
+    garantiaHasta: "2027-02-12",
+    ultimoMantenimiento: "2025-12-05",
+    notas: "Switch de 8 puertos para camarotes"
+  },
+  {
+    id: "6",
+    nombre: "PC Enfermería",
+    tipo: "PC",
+    ip: "192.168.1.25",
+    mac: "00:1B:44:33:6D:E9",
+    nivel: "Cubierta A",
+    ubicacion: "Enfermería",
+    estado: "Mantenimiento",
+    marca: "HP",
+    modelo: "ProDesk 600 G6",
+    numeroSerie: "HP987XYZ",
+    fechaAdquisicion: "2024-05-08",
+    garantiaHasta: "2027-05-08",
+    ultimoMantenimiento: "2026-02-20",
+    notas: "En mantenimiento preventivo - actualización de software"
+  },
+  {
+    id: "7",
+    nombre: "Impresora Cocina",
+    tipo: "Impresora",
+    ip: "192.168.4.20",
+    mac: "00:25:B3:AA:9B:3D",
+    nivel: "Cubierta C",
+    ubicacion: "Oficina de Cocina",
+    estado: "Activo",
+    marca: "Epson",
+    modelo: "EcoTank L3250",
+    numeroSerie: "EP789DEF",
+    fechaAdquisicion: "2024-07-15",
+    garantiaHasta: "2026-07-15",
+    ultimoMantenimiento: "2026-01-05",
+    notas: "Para impresión de menús y pedidos"
+  },
+  {
+    id: "8",
+    nombre: "Router Principal",
+    tipo: "Router",
+    ip: "192.168.0.1",
+    mac: "00:1F:2E:3D:4C:5B",
+    nivel: "Puente",
+    ubicacion: "Sala de Comunicaciones",
+    estado: "Activo",
+    marca: "Ubiquiti",
+    modelo: "EdgeRouter X",
+    numeroSerie: "UB567GHI",
+    fechaAdquisicion: "2023-08-20",
+    garantiaHasta: "2028-08-20",
+    ultimoMantenimiento: "2025-11-30",
+    notas: "Router principal de la red"
+  },
+  {
+    id: "9",
+    nombre: "PC Seguridad",
+    tipo: "PC",
+    ip: "192.168.1.30",
+    mac: "00:1B:44:44:7E:FA",
+    nivel: "Cubierta A",
+    ubicacion: "Centro de Seguridad",
+    estado: "Activo",
+    marca: "Dell",
+    modelo: "OptiPlex 3080",
+    numeroSerie: "DL456JKL",
+    fechaAdquisicion: "2024-04-10",
+    garantiaHasta: "2027-04-10",
+    ultimoMantenimiento: "2025-11-25",
+    notas: "Monitoreo de cámaras de seguridad"
+  },
+  {
+    id: "10",
+    nombre: "Switch Sala de Máquinas",
+    tipo: "Switch",
+    ip: "192.168.2.1",
+    mac: "00:1A:2B:4D:6F:8G",
+    nivel: "Sala de Máquinas",
+    ubicacion: "Rack Principal",
+    estado: "Activo",
+    marca: "Cisco",
+    modelo: "SG350-10",
+    numeroSerie: "CS234MNO",
+    fechaAdquisicion: "2023-09-18",
+    garantiaHasta: "2028-09-18",
+    ultimoMantenimiento: "2025-10-10",
+    notas: "Switch gestionado para control industrial"
+  },
+  {
+    id: "11",
+    nombre: "PC Recepción",
+    tipo: "PC",
+    ip: "192.168.1.40",
+    mac: "00:1B:44:55:8F:0B",
+    nivel: "Cubierta Principal",
+    ubicacion: "Recepción",
+    estado: "Inactivo",
+    marca: "Acer",
+    modelo: "Veriton M200",
+    numeroSerie: "AC678PQR",
+    fechaAdquisicion: "2022-12-01",
+    garantiaHasta: "2025-12-01",
+    ultimoMantenimiento: "2025-06-15",
+    notas: "Equipo antiguo - pendiente de reemplazo"
+  },
+  {
+    id: "12",
+    nombre: "Servidor de Archivos",
+    tipo: "Servidor",
+    ip: "192.168.1.5",
+    mac: "00:1C:3D:4E:5F:6A",
+    nivel: "Puente",
+    ubicacion: "Sala de Servidores",
+    estado: "Activo",
+    marca: "HPE",
+    modelo: "ProLiant ML350 Gen10",
+    numeroSerie: "HPE890STU",
+    fechaAdquisicion: "2023-05-15",
+    garantiaHasta: "2028-05-15",
+    ultimoMantenimiento: "2025-12-10",
+    notas: "Servidor principal de almacenamiento - 8TB RAID 5"
+  }
+];
+
+export const niveles = [
+  "Puente",
+  "Cubierta Principal",
+  "Cubierta A",
+  "Cubierta B",
+  "Cubierta C",
+  "Sala de Máquinas"
+];
+
+export const tiposAsset = ["PC", "Impresora", "Switch", "Router", "Servidor", "Otro"];
+export const estadosAsset = ["Activo", "Inactivo", "Mantenimiento", "Fuera de Servicio"];
