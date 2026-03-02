@@ -1,5 +1,12 @@
-import { Outlet, Link, Navigate, useLocation } from "react-router";
-import { LayoutDashboard, Server, Plus, Ship, FileText, User } from "lucide-react";
+import { Outlet, Link, Navigate, useLocation } from 'react-router'
+import {
+  LayoutDashboard,
+  Server,
+  Plus,
+  Ship,
+  FileText,
+  User,
+} from 'lucide-react'
 import {
   SidebarProvider,
   Sidebar,
@@ -12,21 +19,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
-} from "./ui/sidebar";
-import { useAuth } from "../context/AuthContext";
+} from './ui/sidebar'
+import { useAuth } from '../context/AuthContext'
 
 export default function Root() {
-  const location = useLocation();
-  const { user, initializing, signOut } = useAuth();
+  const location = useLocation()
+  const { user, initializing, signOut } = useAuth()
 
   const isActive = (path: string) => {
-    if (path === "/" && location.pathname === "/") return true;
-    if (path !== "/" && location.pathname.startsWith(path)) return true;
-    return false;
-  };
+    if (path === '/' && location.pathname === '/') return true
+    if (path !== '/' && location.pathname.startsWith(path)) return true
+    return false
+  }
+
+  if (initializing) {
+    return null
+  }
 
   if (!initializing && !user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace />
   }
 
   return (
@@ -40,7 +51,7 @@ export default function Root() {
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     asChild
-                    isActive={isActive("/") && location.pathname === "/"}
+                    isActive={isActive('/') && location.pathname === '/'}
                   >
                     <Link to="/">
                       <LayoutDashboard className="size-4" />
@@ -49,7 +60,7 @@ export default function Root() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={isActive("/assets")}>
+                  <SidebarMenuButton asChild isActive={isActive('/assets')}>
                     <Link to="/assets">
                       <Server className="size-4" />
                       <span>Activos</span>
@@ -57,7 +68,7 @@ export default function Root() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={isActive("/reports")}>
+                  <SidebarMenuButton asChild isActive={isActive('/reports')}>
                     <Link to="/reports">
                       <FileText className="size-4" />
                       <span>Reportes</span>
@@ -65,7 +76,7 @@ export default function Root() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={isActive("/add-asset")}>
+                  <SidebarMenuButton asChild isActive={isActive('/add-asset')}>
                     <Link to="/add-asset">
                       <Plus className="size-4" />
                       <span>Agregar Activo</span>
@@ -73,7 +84,7 @@ export default function Root() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={isActive("/profile")}>
+                  <SidebarMenuButton asChild isActive={isActive('/profile')}>
                     <Link to="/profile">
                       <User className="size-4" />
                       <span>Perfil</span>
@@ -110,7 +121,7 @@ export default function Root() {
                   <div className="flex items-center gap-3 text-sm">
                     <div className="text-right">
                       <p className="font-medium text-slate-900">
-                        {user.user_metadata?.full_name || "Administrador"}
+                        {user.user_metadata?.full_name || 'Administrador'}
                       </p>
                       <p className="text-xs text-slate-500">
                         {user.email} · Rol: Admin
@@ -135,5 +146,5 @@ export default function Root() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
 }
