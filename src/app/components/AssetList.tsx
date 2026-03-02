@@ -9,7 +9,7 @@ import {
   Server,
   X,
 } from "lucide-react";
-import { niveles, tiposAsset, estadosAsset } from "../data/mockData";
+import { tiposAsset, estadosAsset } from "../data/mockData";
 import { Asset, AssetType, AssetStatus } from "../types";
 import { supabase } from "../lib/supabaseClient";
 
@@ -23,6 +23,7 @@ export default function AssetList() {
   const [filterLevel, setFilterLevel] = useState<string>("Todos");
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [niveles, setNiveles] = useState<string[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -43,6 +44,16 @@ export default function AssetList() {
       } else {
         setAssets((data as Asset[]) || []);
       }
+
+      const { data: locs, error: locsError } = await supabase
+        .from("ubicaciones")
+        .select("nombre")
+        .order("nombre", { ascending: true });
+
+      if (!locsError && locs) {
+        setNiveles(locs.map((l: any) => l.nombre));
+      }
+
       setLoading(false);
     };
 
@@ -101,14 +112,14 @@ export default function AssetList() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Activos IT</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">Equipos IT</h2>
           <p className="text-slate-500 mt-1">
             {loading
-              ? "Cargando activos..."
+              ? "Cargando equipos..."
               : `${filteredAssets.length} ${
                   filteredAssets.length === 1
-                    ? "activo encontrado"
-                    : "activos encontrados"
+                    ? "equipo encontrado"
+                    : "equipos encontrados"
                 }`}
           </p>
         </div>
@@ -116,7 +127,7 @@ export default function AssetList() {
           to="/add-asset"
           className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
-          Agregar Activo
+          Agregar Equipo
         </Link>
       </div>
 
@@ -184,13 +195,13 @@ export default function AssetList() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">Nivel</label>
+                <label className="block text-sm font-medium text-slate-700 mb-2">Ubicación Principal</label>
                 <select
                   value={filterLevel}
                   onChange={(e) => setFilterLevel(e.target.value)}
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="Todos">Todos los niveles</option>
+                  <option value="Todos">Todas las ubicaciones</option>
                   {niveles.map((nivel) => (
                     <option key={nivel} value={nivel}>{nivel}</option>
                   ))}
@@ -224,10 +235,10 @@ export default function AssetList() {
                   Tipo
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                  Nivel
+                  Ubicación Principal
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                  Ubicación
+                  Detalles Ubicación
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   IP
@@ -241,7 +252,7 @@ export default function AssetList() {
               {loading ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
-                    Cargando activos...
+                    Cargando equipos...
                   </td>
                 </tr>
               ) : filteredAssets.length === 0 ? (
@@ -250,7 +261,7 @@ export default function AssetList() {
                     colSpan={6}
                     className="px-6 py-12 text-center text-slate-500"
                   >
-                    No se encontraron activos
+                    No se encontraron equipos
                   </td>
                 </tr>
               ) : (

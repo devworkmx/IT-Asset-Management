@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams, Link } from "react-router";
 import { ArrowLeft, Save } from "lucide-react";
 import { Asset } from "../types";
-import { niveles, tiposAsset, estadosAsset } from "../data/mockData";
+import { niveles as defaultNiveles, tiposAsset, estadosAsset } from "../data/mockData";
 import { supabase } from "../lib/supabaseClient";
 
 export default function AddAsset() {
@@ -16,7 +16,7 @@ export default function AddAsset() {
     tipo: "PC",
     ip: "",
     mac: "",
-    nivel: niveles[0],
+    nivel: "",
     ubicacion: "",
     estado: "Activo",
     marca: "",
@@ -28,6 +28,17 @@ export default function AddAsset() {
     ultimoMantenimiento: "",
   });
   const [saving, setSaving] = useState(false);
+  const [niveles, setNiveles] = useState<string[]>([]);
+  
+  useEffect(() => {
+    const fetchNiveles = async () => {
+      const { data } = await supabase.from("ubicaciones").select("nombre").order("nombre");
+      if (data) {
+         setNiveles(data.map((d: any) => d.nombre));
+      }
+    };
+    fetchNiveles();
+  }, []);
 
   useEffect(() => {
     if (!isEditing || !editId) return;
@@ -46,7 +57,7 @@ export default function AddAsset() {
       if (error) {
         // eslint-disable-next-line no-console
         console.error(
-          "[Supabase] Error cargando activo para edición:",
+          "[Supabase] Error cargando equipo para edición:",
           error.message,
         );
       } else if (data) {
@@ -92,7 +103,7 @@ export default function AddAsset() {
 
       if (error) {
         // eslint-disable-next-line no-console
-        console.error("[Supabase] Error actualizando activo:", error.message);
+        console.error("[Supabase] Error actualizando equipo:", error.message);
         setSaving(false);
         return;
       }
@@ -100,7 +111,7 @@ export default function AddAsset() {
       const { error } = await supabase.from("assets").insert(payload);
       if (error) {
         // eslint-disable-next-line no-console
-        console.error("[Supabase] Error creando activo:", error.message);
+        console.error("[Supabase] Error creando equipo:", error.message);
         setSaving(false);
         return;
       }
@@ -129,10 +140,10 @@ export default function AddAsset() {
         </Link>
         <div>
           <h2 className="text-2xl font-semibold text-slate-900">
-            {isEditing ? "Editar Activo" : "Agregar Nuevo Activo"}
+            {isEditing ? "Editar Equipo" : "Agregar Nuevo Equipo"}
           </h2>
           <p className="text-slate-500 mt-1">
-            {isEditing ? "Modifica la información del activo" : "Completa el formulario para agregar un nuevo activo"}
+            {isEditing ? "Modifica la información del equipo" : "Completa el formulario para agregar un nuevo equipo"}
           </p>
         </div>
       </div>
@@ -146,7 +157,7 @@ export default function AddAsset() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Nombre del Activo *
+                  Nombre del Equipo *
                 </label>
                 <input
                   type="text"
@@ -231,7 +242,7 @@ export default function AddAsset() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Nivel *
+                  Ubicación Principal *
                 </label>
                 <select
                   name="nivel"
@@ -248,7 +259,7 @@ export default function AddAsset() {
 
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">
-                  Ubicación Específica *
+                  Detalles de Ubicación *
                 </label>
                 <input
                   type="text"
@@ -365,7 +376,7 @@ export default function AddAsset() {
               onChange={handleChange}
               rows={4}
               className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Información adicional sobre el activo..."
+              placeholder="Información adicional sobre el equipo..."
             />
           </div>
 
@@ -388,7 +399,7 @@ export default function AddAsset() {
                   ? "Guardando..."
                   : isEditing
                     ? "Guardar Cambios"
-                    : "Agregar Activo"}
+                    : "Agregar Equipo"}
               </span>
             </button>
           </div>

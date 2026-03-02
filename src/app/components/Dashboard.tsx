@@ -26,7 +26,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "./ui/chart";
-import { niveles } from "../data/mockData";
+
 import { Asset } from "../types";
 import { useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabaseClient";
@@ -77,6 +77,7 @@ export default function Dashboard() {
   const { user } = useAuth();
   const [assets, setAssets] = useState<Asset[]>([]);
   const [loading, setLoading] = useState(true);
+  const [niveles, setNiveles] = useState<string[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -97,6 +98,16 @@ export default function Dashboard() {
       } else {
         setAssets((data as Asset[]) || []);
       }
+
+      const { data: locs, error: locsError } = await supabase
+        .from("ubicaciones")
+        .select("nombre")
+        .order("nombre", { ascending: true });
+
+      if (!locsError && locs) {
+        setNiveles(locs.map((l: any) => l.nombre));
+      }
+
       setLoading(false);
     };
 
@@ -200,7 +211,7 @@ export default function Dashboard() {
               </span>
             </h2>
             <p className="text-sm sm:text-base text-sky-100/90">
-              Tienes una visión global del estado de todos los activos IT de la
+              Tienes una visión global del estado de todos los equipos IT de la
               organización: salud, incidencias y capacidad, todo en un solo
               lugar.
             </p>
@@ -216,7 +227,7 @@ export default function Dashboard() {
                 to="/add-asset"
                 className="inline-flex items-center gap-2 rounded-full bg-white text-xs font-semibold text-sky-700 px-4 py-1.5 hover:bg-slate-50 transition-colors"
               >
-                + Registrar nuevo activo
+                + Registrar nuevo equipo
               </Link>
             </div>
           </div>
@@ -246,7 +257,7 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-3 gap-2 text-[11px]">
               <div className="rounded-xl bg-black/10 px-3 py-2 backdrop-blur">
-                <p className="text-sky-100/80">Activos</p>
+                <p className="text-sky-100/80">Equipos</p>
                 <p className="mt-1 text-lg font-semibold">{totalAssets}</p>
               </div>
               <div className="rounded-xl bg-black/10 px-3 py-2 backdrop-blur">
@@ -272,7 +283,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-slate-500 uppercase">
-                Total activos
+                Total equipos
               </p>
               <p className="text-3xl font-semibold text-slate-900 mt-1">
                 {loading ? "…" : totalAssets}
@@ -288,7 +299,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-slate-500 uppercase">
-                Activos
+                Equipos
               </p>
               <p className="text-3xl font-semibold text-emerald-600 mt-1">
                 {loading ? "…" : activeAssets}
@@ -340,10 +351,10 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-semibold text-slate-900">
-                Activos por Tipo
+                Equipos por Tipo
               </h3>
               <p className="text-sm text-slate-500">
-                Distribución por categoría de activo
+                Distribución por categoría de equipo
               </p>
             </div>
             <div className="bg-slate-100 p-2 rounded-lg">
@@ -383,7 +394,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-semibold text-slate-900">
-                Estado de Activos
+                Estado de Equipos
               </h3>
               <p className="text-sm text-slate-500">
                 Porcentaje por estado operativo
@@ -444,7 +455,7 @@ export default function Dashboard() {
       {/* Assets by Level */}
       <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
         <h3 className="font-semibold text-slate-900 mb-4">
-          Activos por Nivel
+          Equipos por Ubicación
         </h3>
         <div className="space-y-3">
           {assetsByLevel.map(({ nivel, count }) => (
@@ -475,7 +486,7 @@ export default function Dashboard() {
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
         <div className="p-6 border-b border-slate-200">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-slate-900">Activos Recientes</h3>
+            <h3 className="font-semibold text-slate-900">Equipos Recientes</h3>
             <Link
               to="/assets"
               className="text-sm text-blue-600 hover:text-blue-700"
@@ -495,7 +506,7 @@ export default function Dashboard() {
                   Tipo
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                  Nivel
+                  Ubicación
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
                   IP
