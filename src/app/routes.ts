@@ -8,6 +8,7 @@ import Reports from "./components/Reports";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
 import UserProfile from "./components/UserProfile";
+import Ubicaciones from "./components/Ubicaciones";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
       { path: "add-asset", Component: AddAsset },
       { path: "reports", Component: Reports },
       { path: "profile", Component: UserProfile },
+      { path: "ubicaciones", Component: Ubicaciones },
       { path: "*", Component: NotFound },
     ],
   },

@@ -2,6 +2,7 @@ import { Outlet, Link, Navigate, useLocation } from 'react-router'
 import {
   LayoutDashboard,
   Server,
+  MapPin,
   Plus,
   Ship,
   FileText,
@@ -63,7 +64,7 @@ export default function Root() {
                   <SidebarMenuButton asChild isActive={isActive('/assets')}>
                     <Link to="/assets">
                       <Server className="size-4" />
-                      <span>Activos</span>
+                      <span>Equipos</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -79,7 +80,15 @@ export default function Root() {
                   <SidebarMenuButton asChild isActive={isActive('/add-asset')}>
                     <Link to="/add-asset">
                       <Plus className="size-4" />
-                      <span>Agregar Activo</span>
+                      <span>Agregar Equipo</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={isActive('/ubicaciones')}>
+                    <Link to="/ubicaciones">
+                      <MapPin className="size-4" />
+                      <span>Ubicaciones</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -109,10 +118,10 @@ export default function Root() {
                   </div>
                   <div>
                     <h1 className="font-semibold text-slate-900">
-                      IT Asset Management
+                      Administración de Equipos IT
                     </h1>
                     <p className="text-xs text-slate-500">
-                      Panel de administración de activos
+                      Panel de administración de equipos
                     </p>
                   </div>
                 </div>

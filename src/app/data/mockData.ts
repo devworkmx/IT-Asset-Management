@@ -245,14 +245,5 @@ export const mockAssets: Asset[] = [
   }
 ];
 
-export const niveles = [
-  "Puente",
-  "Cubierta Principal",
-  "Cubierta A",
-  "Cubierta B",
-  "Cubierta C",
-  "Sala de Máquinas"
-];
-
 export const tiposAsset = ["PC", "Impresora", "Switch", "Router", "Servidor", "Otro"];
 export const estadosAsset = ["Activo", "Inactivo", "Mantenimiento", "Fuera de Servicio"];

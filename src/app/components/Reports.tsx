@@ -22,7 +22,6 @@ import {
 } from "recharts";
 import * as XLSX from "xlsx";
 import { Asset } from "../types";
-import { niveles } from "../data/mockData";
 import { supabase } from "../lib/supabaseClient";
 
 export default function Reports() {
@@ -32,6 +31,7 @@ export default function Reports() {
     new Date().getFullYear(),
   );
   const [loading, setLoading] = useState(true);
+  const [niveles, setNiveles] = useState<string[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -52,6 +52,16 @@ export default function Reports() {
       } else {
         setAssets((data as Asset[]) || []);
       }
+
+      const { data: locs, error: locsError } = await supabase
+        .from("ubicaciones")
+        .select("nombre")
+        .order("nombre", { ascending: true });
+
+      if (!locsError && locs) {
+        setNiveles(locs.map((l: any) => l.nombre));
+      }
+
       setLoading(false);
     };
 
@@ -154,12 +164,12 @@ export default function Reports() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-semibold text-slate-900">Reportes</h2>
-        <p className="text-slate-500 mt-1">
-          {loading
-            ? "Cargando datos de activos..."
-            : "Análisis y exportación de datos de activos"}
-        </p>
+          <h2 className="text-2xl font-semibold text-slate-900">Reportes</h2>
+          <p className="text-slate-500 mt-1">
+            {loading
+              ? "Cargando datos de equipos..."
+              : "Análisis y exportación de datos de equipos"}
+          </p>
       </div>
 
       {/* Quick Export Actions */}
@@ -175,7 +185,7 @@ export default function Reports() {
             <Download className="size-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
           </div>
           <h3 className="font-semibold text-slate-900 mb-1">Inventario Completo</h3>
-          <p className="text-sm text-slate-500">Exportar todos los activos</p>
+          <p className="text-sm text-slate-500">Exportar todos los equipos</p>
         </button>
 
         <button
@@ -189,7 +199,7 @@ export default function Reports() {
             <Download className="size-5 text-slate-400 group-hover:text-green-600 transition-colors" />
           </div>
           <h3 className="font-semibold text-slate-900 mb-1">Por Área</h3>
-          <p className="text-sm text-slate-500">Equipos por nivel/ubicación</p>
+          <p className="text-sm text-slate-500">Equipos por ubicación</p>
         </button>
 
         <button
@@ -278,7 +288,7 @@ export default function Reports() {
         {/* Bar Chart */}
         {selectedReport === "area" && (
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm lg:col-span-2">
-            <h3 className="font-semibold text-slate-900 mb-6">Equipos por Área</h3>
+            <h3 className="font-semibold text-slate-900 mb-6">Equipos por Área/Ubicación</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={assetsByArea}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -449,7 +459,7 @@ export default function Reports() {
             </p>
           </div>
           <div>
-            <p className="text-sm text-blue-700">Activos</p>
+            <p className="text-sm text-blue-700">Equipos Activos</p>
             <p className="text-2xl font-bold text-green-700">
               {loading
                 ? "…"

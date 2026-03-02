@@ -48,7 +48,7 @@ export default function AssetDetail() {
         // eslint-disable-next-line no-console
         if (assetError) {
           console.error(
-            "[Supabase] Error cargando activo:",
+            "[Supabase] Error cargando equipo:",
             assetError.message,
           );
         }
@@ -73,7 +73,7 @@ export default function AssetDetail() {
     const { error } = await supabase.from("assets").delete().eq("id", id);
     if (error) {
       // eslint-disable-next-line no-console
-      console.error("[Supabase] Error eliminando activo:", error.message);
+      console.error("[Supabase] Error eliminando equipo:", error.message);
       return;
     }
     navigate("/assets");
@@ -86,7 +86,7 @@ export default function AssetDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <p className="text-slate-500">Cargando activo...</p>
+        <p className="text-slate-500">Cargando equipo...</p>
       </div>
     );
   }
@@ -94,7 +94,7 @@ export default function AssetDetail() {
   if (!asset) {
     return (
       <div className="flex items-center justify-center py-12">
-        <p className="text-slate-500">Activo no encontrado</p>
+        <p className="text-slate-500">Equipo no encontrado</p>
       </div>
     );
   }
@@ -133,7 +133,7 @@ export default function AssetDetail() {
           </Link>
           <div>
             <h2 className="text-2xl font-semibold text-slate-900">{asset.nombre}</h2>
-            <p className="text-slate-500 mt-1">Detalles del activo</p>
+            <p className="text-slate-500 mt-1">Detalles del equipo</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -247,15 +247,15 @@ export default function AssetDetail() {
           <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
               <MapPin className="size-5 text-slate-600" />
-              <h3 className="font-semibold text-slate-900">Ubicación</h3>
+              <h3 className="font-semibold text-slate-900">Ubicación Principal</h3>
             </div>
             <div className="space-y-3">
               <div>
-                <p className="text-sm text-slate-500">Nivel</p>
+                <p className="text-sm text-slate-500">Ubicación Principal</p>
                 <p className="text-slate-900 mt-1">{asset.nivel}</p>
               </div>
               <div>
-                <p className="text-sm text-slate-500">Ubicación Específica</p>
+                <p className="text-sm text-slate-500">Detalles de Ubicación</p>
                 <p className="text-slate-900 mt-1">{asset.ubicacion}</p>
               </div>
             </div>
@@ -309,7 +309,7 @@ export default function AssetDetail() {
           <div className="bg-white rounded-xl p-6 max-w-md w-full">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">Confirmar Eliminación</h3>
             <p className="text-slate-600 mb-6">
-              ¿Estás seguro de que deseas eliminar el activo "{asset.nombre}"? Esta acción no se puede deshacer.
+              ¿Estás seguro de que deseas eliminar el equipo "{asset.nombre}"? Esta acción no se puede deshacer.
             </p>
             <div className="flex gap-3">
               <button
